@@ -1,0 +1,89 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+    <title>Save Book</title>
+</head>
+
+<body>
+<div class = "container">
+
+    <h3>Book Directory</h3>
+    <hr>
+
+    <p class = "h4 mb-4">Save book</p>
+
+    <form action = "#" th:action = "@{/admins/book/save}"
+          th:object = "${book}" method = "POST">
+
+        <!-- Add hidden form field to handle update -->
+        <input type = "hidden" th:field = "*{bookId}" />
+
+        <input type = "text" th:field = "*{bookName}"
+               class = "form-control mb-4 col-4" placeholder = "Book Name">
+        <div th:if="${#fields.hasErrors('bookName')}"
+             style="margin-bottom: 25px" class="text-danger">
+            <ul>
+                <li th:each="err : ${#fields.errors('bookName')}" th:text="'Book name ' + ${err}" />
+            </ul>
+        </div>
+
+        <input type = "text" th:field = "*{author}"
+               class = "form-control mb-4 col-4" placeholder = "Author">
+        <div th:if="${#fields.hasErrors('author')}"
+             style="margin-bottom: 25px" class="text-danger">
+            <ul>
+                <li th:each="err : ${#fields.errors('author')}" th:text="'Author ' + ${err}" />
+            </ul>
+        </div>
+
+        <input type = "text" th:field = "*{description}"
+               class = "form-control mb-4 col-4" placeholder = "Description">
+        <div th:if="${#fields.hasErrors('description')}"
+             style="margin-bottom: 25px" class="text-danger">
+            <ul>
+                <li th:each="err : ${#fields.errors('description')}" th:text="'description ' + ${err}" />
+            </ul>
+        </div>
+
+        <input type = "text" th:field = "*{isbn}"
+               class = "form-control mb-4 col-4" placeholder = "ISBN">
+        <div th:if="${#fields.hasErrors('isbn')}"
+             style="margin-bottom: 25px" class="text-danger">
+            <ul>
+                <li th:each="err : ${#fields.errors('isbn')}" th:text="'ISBN ' + ${err}" />
+            </ul>
+        </div>
+
+        <input type = "text" th:field = "*{price}"
+               class = "form-control mb-4 col-4" placeholder = "Price">
+        <div th:if="${#fields.hasErrors('price')}"
+             style="margin-bottom: 25px" class="text-danger">
+            <ul>
+                <li th:each="err : ${#fields.errors('price')}" th:text="'Price ' + ${err}" />
+            </ul>
+        </div>
+
+        <select th:field = "*{category}" class = "form-control mb-4 col-4">
+            <th:block th:each = "tempCategory : ${listCategories}">
+                <option th:text = "${tempCategory.categoryName}" th:value = "${tempCategory.categoryId}">
+                </option>
+            </th:block>
+        </select>
+
+        <button type = "submit" class = "btn btn-info col-2">Save</button>
+    </form>
+
+    <hr>
+    <a th:href = "@{/admins/book/list}"> Back to Book list</a>
+</div>
+</body>
+
+</html>

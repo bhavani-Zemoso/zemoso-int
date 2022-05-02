@@ -1,0 +1,103 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+    <title>Book Directory</title>
+</head>
+
+<body>
+
+<nav class = "navbar navbar-default navbar-expand-lg bg-warning">
+    <div class = "container-fluid">
+        <ul class = "nav navbar-nav">
+            <li class = "nav-item"><span sec:authentication="name"></span></li>
+        </ul>
+        <span class = "navbar-brand">CROSSWORDS</span>
+        <ul class = "nav navbar-nav navbar-right">
+            <li class = "nav-item"><a class = "nav-link" th:href = "@{/admins/category/list}"> Categories </a></li>
+            <li class = "nav-item"><a class = "nav-link" th:href = "@{/admins/book/list}"> Books </a></li>
+            <li class = "nav-item"><a class = "nav-link" th:href = "@{/admins/customers/list}"> Customers </a></li>
+            <li class = "nav-item"><a class = "nav-link" th:href = "@{/admins/orders/list}"> Orders </a></li>
+            <li class = "nav-item">
+                <form action="#" th:action="@{/logout}"
+                      method="POST">
+                    <input type="submit" value="Logout" class="nav-link btn btn-outline-success my-2 my-sm-0" />
+                </form>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container-lg">
+
+    <nav class = "navbar navbar-default navbar-expand-lg bg-dark mt-3 mb-3">
+        <div class = "container-fluid">
+            <ul class = "nav navbar-nav">
+                <li class = "nav-item">
+                    <!-- Add a button -->
+                    <a th:href = "@{/admins/book/showFormForAdd}"
+                       class = "nav-link btn btn-outline-success my-2 my-sm-0">
+                        Add
+                    </a>
+                </li>
+            </ul>
+            <span class = "navbar-brand text-center text-white">BOOKS</span>
+            <ul class = "nav navbar-nav">
+                <li class = "nav-item">
+                    <a th:href = "@{/admins/}" class = "nav-link"> Home </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+        <tr>
+            <th style = "width:15%">Book Name</th>
+            <th style = "width:15%">Author</th>
+            <th style = "width:35%">Description</th>
+            <th>ISBN</th>
+            <th>Price</th>
+            <th></th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="tempBook : ${books}">
+
+            <td th:text="${tempBook.bookName}" />
+            <td th:text="${tempBook.author}" />
+            <td th:text="${tempBook.description}" />
+            <td th:text="${tempBook.isbn}" />
+            <td th:text="${tempBook.price}" />
+
+            <!-- Add update button/link -->
+            <td>
+                <a th:href = "@{/admins/book/showFormForUpdate(bookId=${tempBook.bookId})}"
+                   class = "btn btn-info btn-sm">
+                    Update
+                </a>
+                <a th:href = "@{/admins/book/delete(bookId=${tempBook.bookId})}"
+                   class = "btn btn-danger btn-sm"
+                   onclick = "if(!(confirm('Are you sure you want to delete this Book?'))) return false">
+                    Delete
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>
+
+
+

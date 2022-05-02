@@ -1,0 +1,74 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+    <title>Order Directory</title>
+</head>
+
+<body>
+
+<div class="container">
+
+    <nav class = "navbar navbar-default navbar-expand-lg bg-dark mt-3 mb-3">
+        <div class = "container-fluid">
+            <span class = "navbar-brand text-center text-white">ORDERS</span>
+            <ul class = "nav navbar-nav">
+                <li class = "nav-item">
+                    <a th:href = "@{/customers/}" class = "nav-link"> Home </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+        <tr>
+            <th>Order Date</th>
+            <th>Recipient Name</th>
+            <th>Recipient Phone</th>
+            <th>Address</th>
+            <th>City</th>
+            <th>Country</th>
+            <th>ZipCode</th>
+            <th>Total</th>
+            <th></th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="tempOrder : ${orders}">
+
+            <td th:text="${tempOrder.orderDate}" />
+            <td th:text="${tempOrder.recipientName}" />
+            <td th:text="${tempOrder.recipientPhone}" />
+            <td th:text="${tempOrder.shippingAddress}" />
+            <td th:text="${tempOrder.city}" />
+            <td th:text="${tempOrder.country}" />
+            <td th:text="${tempOrder.zipcode}" />
+            <td th:text="${tempOrder.total}" />
+
+            <!-- Add update button/link -->
+            <td>
+                <a th:href = "@{/customers/orders/showDetails(orderId=${tempOrder.orderId})}"
+                   class = "btn btn-primary btn-sm">
+                    Order Details
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>
+
+
+

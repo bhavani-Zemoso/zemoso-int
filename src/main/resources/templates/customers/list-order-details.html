@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+    <title>Order Details Directory</title>
+</head>
+
+<body>
+
+<div class="container">
+
+    <nav class = "navbar navbar-default navbar-expand-lg bg-dark mt-3 mb-3">
+        <div class = "container-fluid">
+            <span class = "navbar-brand text-center text-white">ORDER DETAILS</span>
+            <ul class = "nav navbar-nav">
+                <li class = "nav-item">
+                    <a th:href = "@{/customers/}" class = "nav-link"> Home </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+        <tr>
+            <th>Book Name</th>
+            <th>Quantity</th>
+            <th>Subtotal</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="tempOrderDetail : ${orderDetails}">
+
+            <td th:text="${tempOrderDetail.book.bookName}" />
+            <td th:text="${tempOrderDetail.quantity}" />
+            <td th:text="${tempOrderDetail.subtotal}" />
+
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>
+
+
+

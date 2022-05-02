@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+    <title>Checkout</title>
+</head>
+
+<body>
+    <div class = "text-center">
+        <h2>Checkout</h2>
+    </div>
+
+    <div class = "row m-1">
+
+        <div class = "col-sm-8">
+            <div class = "card">
+                <div class = "card-header">
+                    <h5>Shipping Information</h5>
+                </div>
+                <div class = "card-body">
+                    <p>
+                        <b>Ship to: </b> [[${customer.customerAddress}]], [[${customer.city}]], [[${customer.country}]], [[${customer.zipCode}]]
+                       <!-- <a href = "@{/customers/checkout/showFormForAddress}">Ship to another address</a> -->
+                    </p>
+                    <p>
+                        <b>Days to Deliver: </b> [[${checkoutInfo.deliveryDays}]] day(s)
+                    </p>
+                    <p>
+                        <b>Expected delivery date: </b>[[${#dates.format(checkoutInfo.deliveryDate, 'E, dd MMM yyyy')}]]
+                    </p>
+                </div>
+            </div>
+            <div class = "card mt-3 mb-3">
+                <div class = "card-header">
+                    <h5>Payment method</h5>
+                </div>
+                <div class = "card-body">
+
+                    <form th:action = "@{/customers/checkout/place_order}" method = "post">
+                        <span>Cash On Delivery</span>
+                        <!--<button class = "btn btn-warning" type = "submit">Place order</button> -->
+                    </form>
+                </div>
+            </div>
+
+        </div>
+
+        <div class = "col-sm-4">
+            <div class = "card">
+                <div class = "card-header">
+                    <h5>Order Summary</h5>
+                </div>
+                <div class = "card-body">
+                    <div>
+                        <table>
+                            <th:block th:each = "item : ${cartItems}">
+                                <tr>
+                                    <td>[[${item.quantity}]] x &nbsp;&nbsp;</td>
+                                    <td width = "70%">[[${item.book.bookName}]]</td>
+                                    <td>
+                                        <small>[[${item.subtotal}]]</small>
+                                    </td>
+                                </tr>
+                            </th:block>
+                            <tr>
+                                <td colspan = "12"><hr/></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class = "row mt-2">
+                        <div class = "col">Total:</div>
+                        <div class = "col">[[${checkoutInfo.bookTotal}]]</div>
+                    </div>
+                </div>
+
+        </div>
+
+            <div class = "mt-3 mb-3">
+                <form th:action = "@{/customers/checkout/place_order}" method = "post">
+                    <button class = "btn btn-warning btn-block" type = "submit">Place order</button>
+                </form>
+            </div>
+
+    </div>
+</body>
+</html>
+

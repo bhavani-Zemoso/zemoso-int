@@ -1,0 +1,85 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+    <title>Book Directory</title>
+</head>
+
+<body>
+
+<div class="container-lg">
+
+    <h1>Welcome <span sec:authentication="name"></span></h1>
+    <hr>
+
+    <h3>Book Directory</h3>
+    <hr>
+
+    <a th:href = "@{/customers/cart/showCart}">Cart</a>
+
+    <hr>
+
+    <a th:href = "@{/customers/orders/list}">My Orders</a>
+
+    <table class="table table-bordered table-striped w-auto">
+        <thead class="thead-dark">
+        <tr>
+            <th width = "15%">Book Name</th>
+            <th width = "15%">Author</th>
+            <th width = "35%">Description</th>
+            <th>ISBN</th>
+            <th>Price</th>
+            <th></th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="tempBook : ${books}">
+
+            <td th:text="${tempBook.bookName}" />
+            <td th:text="${tempBook.author}" />
+            <td th:text="${tempBook.description}" />
+            <td th:text="${tempBook.isbn}" />
+            <td th:text="${tempBook.price}" />
+
+            <!-- Add to cart link -->
+            <td>
+                <!--<input type = "hidden" th:value = "${tempBook.bookId}" class = "bookId"> -->
+                <button th:onclick="'javascript:addToCart(\'' + ${tempBook.bookId} + '\');'" class = "btn btn-info btn-sm">
+                    Add to cart
+                </button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- Add a logout button -->
+    <form action="#" th:action="@{/logout}"
+          method="POST">
+
+        <input type="submit" value="Logout" class="btn btn-outline-primary mt-2" />
+
+    </form>
+
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type = "text/javascript">
+    var contextPath = "[[@{/}]]";
+    var csrfHeaderName = "[[${_csrf.headerName}]]";
+    var csrfValue = "[[${_csrf.token}]]";
+</script>
+<script th:src = "@{/js/addToCart.js}"></script>
+
+</body>
+</html>
+
+
+
