@@ -25,7 +25,6 @@ public class Category {
     @OneToMany(fetch = FetchType.LAZY,
             mappedBy = "category",
             cascade = CascadeType.ALL)
-   // @JoinColumn(name = "cat_id")
     private List<Book> books;
 
 

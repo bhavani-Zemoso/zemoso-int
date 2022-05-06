@@ -2,18 +2,15 @@ package com.springboot.application.OnlineBookStore.service;
 
 import com.springboot.application.OnlineBookStore.dto.CartItemDTO;
 import com.springboot.application.OnlineBookStore.entity.CheckoutInfo;
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.springboot.application.OnlineBookStore.service_interface.CheckoutService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class CheckoutService {
+public class CheckoutServiceImpl implements CheckoutService {
 
-    @Autowired
-    ModelMapper modelMapper;
-
+    @Override
     public CheckoutInfo prepareCheckout(List<CartItemDTO> cartItems)
     {
         CheckoutInfo checkoutInfo = new CheckoutInfo();

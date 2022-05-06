@@ -15,23 +15,47 @@
 </head>
 
 <body>
-<div class = "center">
-    <h2>
-        Your Shopping Cart
-    </h2>
+<nav class = "navbar navbar-default navbar-expand-lg bg-warning py-4">
+    <div class = "container-fluid">
+        <ul class = "nav navbar-nav">
+            <li class = "nav-item"><span sec:authentication="name"></span></li>
+        </ul>
+        <span class = "navbar-brand">CROSSWORDS</span>
+        <ul class = "nav navbar-nav navbar-right">
+            <li class = "nav-item"><a class = "nav-link" th:href = "@{/customers/orders/list}"> My Orders </a></li>
+            <li class = "nav-item">
+                <form action="#" th:action="@{/logout}"
+                      method="POST">
+                    <input type="submit" value="Logout" class="nav-link btn btn-outline-success my-2 my-sm-0" />
+                </form>
+            </li>
+        </ul>
+    </div>
+</nav>
 
-    <br/>
+<div class = "container">
 
-    <div class = "row" th:unless = "${#lists.isEmpty(cartItems)}">
+    <nav class = "navbar navbar-default navbar-expand-lg bg-dark mt-5 mb-3">
+        <div class = "container-fluid">
+            <span class = "navbar-brand text-center text-white">SHOPPING CART</span>
+            <ul class = "nav navbar-nav">
+                <li class = "nav-item">
+                    <a class = "nav-link text-warning" th:href = "@{/customers/page/1}"> Shop More </a></li>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div th:unless = "${#lists.isEmpty(cartItems)}">
 
     <table class="table table-bordered table-striped w-auto">
         <thead class="thead-dark">
         <tr>
-            <th>Book Name</th>
-            <th>Author</th>
-            <th>Quantity</th>
-            <th>Subtotal</th>
-            <th></th>
+            <th width = "30%">Book Name</th>
+            <th width = "30%">Author</th>
+            <th width = "15%">Quantity</th>
+            <th width = "15%">Subtotal</th>
+            <th width = "10%"></th>
         </tr>
         </thead>
 
@@ -63,23 +87,20 @@
 
     </div>
 
-    <div class = "col" th:unless = "${#lists.isEmpty(cartItems)}">
+    <div class = "col text-center" th:unless = "${#lists.isEmpty(cartItems)}">
         <div>
-            <span class = "h5">Estimated total : </span>
-        </div>
-        <div class = "mt-2">
-            <span class = "h6" id = "totalAmount"></span>
+            <span class = "h5">TOTAL : </span><span class = "h6" id = "totalAmount"></span>
         </div>
         <div class = "mt-2">
             <form th:action = "@{/customers/checkout/}">
-                <button type = "submit" class = "btn btn-danger p-3 mt-2">Check out</button>
+                <button type = "submit" class = "btn btn-danger p-2 mt-2">Check out</button>
             </form>
 
         </div>
     </div>
 
     <div th:if = "${#lists.isEmpty(cartItems)}">
-        <h3>You have not chosen any products yet.</h3>
+        <h3 class = "text-center">You have not chosen any products yet!</h3>
     </div>
 
 </div>

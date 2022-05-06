@@ -3,8 +3,8 @@ package com.springboot.application.OnlineBookStore.controller;
 import com.springboot.application.OnlineBookStore.dto.BookDTO;
 import com.springboot.application.OnlineBookStore.dto.CategoryDTO;
 import com.springboot.application.OnlineBookStore.entity.Book;
-import com.springboot.application.OnlineBookStore.service.BookService;
-import com.springboot.application.OnlineBookStore.service.CategoryService;
+import com.springboot.application.OnlineBookStore.service_interface.BookService;
+import com.springboot.application.OnlineBookStore.service_interface.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,20 +29,20 @@ public class AdminBookController {
         bookService = theBookService;
     }
 
-    @GetMapping("/list")
-    public String listBooks(Model theModel)
+    @GetMapping("/list/page/{pageNum}")
+    public String listBooks(@PathVariable(name = "pageNum") int pageNum, Model theModel)
     {
-        List<BookDTO> theBooks = bookService.findAll();
+        List<BookDTO> theBooks = bookService.findAll(pageNum);
 
         theModel.addAttribute("books", theBooks);
 
         return "admins/list-books";
     }
 
-    @GetMapping("/showFormForAdd")
+    @GetMapping("/add")
     public String showFormForAdd(Model model)
     {
-        List<CategoryDTO> listCategories = categoryService.findAll();
+        List<CategoryDTO> listCategories = categoryService.findAll(0);
         // Create model attribute to bind form data
         Book theBook = new Book();
 
@@ -64,15 +64,15 @@ public class AdminBookController {
             bookService.save(theBook);
 
             //Use a redirect to prevent duplicate submissions
-            return "redirect:/admins/book/list";
+            return "redirect:/admins/book/list/page/1";
         }
     }
 
-    @GetMapping("/showFormForUpdate")
+    @GetMapping("/update")
     public String showFormForUpdate(@RequestParam("bookId") int theId,
                                     Model theModel)
     {
-        List<CategoryDTO> listCategories = categoryService.findAll();
+        List<CategoryDTO> listCategories = categoryService.findAll(0);
         //Get the book from the service
         BookDTO theBook = bookService.findById(theId);
 
@@ -93,7 +93,7 @@ public class AdminBookController {
         bookService.deleteById(theId);
 
         //redirect to /book/list
-        return "redirect:/admins/book/list";
+        return "redirect:/admins/book/list/page/1";
     }
 
 }

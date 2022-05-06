@@ -3,9 +3,8 @@ package com.springboot.application.OnlineBookStore.controller;
 import com.springboot.application.OnlineBookStore.dto.CustomerDTO;
 import com.springboot.application.OnlineBookStore.dto.OrderDTO;
 import com.springboot.application.OnlineBookStore.dto.OrderDetailDTO;
-import com.springboot.application.OnlineBookStore.entity.Customer;
-import com.springboot.application.OnlineBookStore.service.CustomerService;
-import com.springboot.application.OnlineBookStore.service.OrderService;
+import com.springboot.application.OnlineBookStore.service_interface.CustomerService;
+import com.springboot.application.OnlineBookStore.service_interface.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,7 +33,7 @@ public class OrderController {
         return "admins/list-orders";
     }
 
-    @GetMapping("/admins/orders/showDetails")
+    @GetMapping("/admins/orders/orderDetails")
     public String listOrderDetails(Model model, @RequestParam("orderId") int theId)
     {
         Set<OrderDetailDTO> orderDetails = orderService.getDetails(theId);
@@ -56,7 +55,7 @@ public class OrderController {
         return "customers/list-orders";
     }
 
-    @GetMapping("/customers/orders/showDetails")
+    @GetMapping("/customers/orders/orderDetails")
     public String listOrderDetailsForCustomer(Model model, @RequestParam("orderId") int theId)
     {
         Set<OrderDetailDTO> orderDetails = orderService.getDetails(theId);

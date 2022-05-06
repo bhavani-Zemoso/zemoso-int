@@ -1,12 +1,13 @@
 package com.springboot.application.OnlineBookStore.service;
 
-import com.springboot.application.OnlineBookStore.dao.CustomerRepository;
+import com.springboot.application.OnlineBookStore.dto.BookStoreUserDTO;
+import com.springboot.application.OnlineBookStore.dao.repository.CustomerRepository;
 import com.springboot.application.OnlineBookStore.dao.RoleDAO;
 import com.springboot.application.OnlineBookStore.dao.UserDAO;
 import com.springboot.application.OnlineBookStore.entity.Customer;
 import com.springboot.application.OnlineBookStore.entity.Role;
 import com.springboot.application.OnlineBookStore.entity.User;
-import com.springboot.application.OnlineBookStore.user.BookStoreUser;
+import com.springboot.application.OnlineBookStore.service_interface.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -21,7 +22,7 @@ import java.util.Collection;
 import java.util.stream.Collectors;
 
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserDAO userDAO;
@@ -44,18 +45,21 @@ public class UserServiceImpl implements UserService{
 
     @Override
     @Transactional
-    public void save(BookStoreUser bookStoreUser) {
+    public void save(BookStoreUserDTO bookStoreUserDTO) {
 
-        User user = new User();
-
-        user.setUserName(bookStoreUser.getUserName());
-        user.setPassword(passwordEncoder.encode(bookStoreUser.getPassword()));
-        user.setFirstName(bookStoreUser.getFirstName());
-        user.setLastName(bookStoreUser.getLastName());
-        user.setEmail(bookStoreUser.getEmail());
+        User user = saveDetails(bookStoreUserDTO);
 
         user.setRoles(Arrays.asList(roleDAO.findRoleByName("ROLE_CUSTOMER")));
 
+        userDAO.save(user);
+    }
+
+    @Transactional
+    @Override
+    public void saveAdmin(BookStoreUserDTO bookStoreUserDTO)
+    {
+        User user = saveDetails(bookStoreUserDTO);
+        user.setRoles(Arrays.asList(roleDAO.findRoleByName("ROLE_ADMIN")));
         userDAO.save(user);
     }
 
@@ -87,5 +91,18 @@ public class UserServiceImpl implements UserService{
     private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles)
     {
         return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
+    }
+
+    public User saveDetails(BookStoreUserDTO bookStoreUserDTO)
+    {
+        User user = new User();
+
+        user.setUserName(bookStoreUserDTO.getUserName());
+        user.setPassword(passwordEncoder.encode(bookStoreUserDTO.getPassword()));
+        user.setFirstName(bookStoreUserDTO.getFirstName());
+        user.setLastName(bookStoreUserDTO.getLastName());
+        user.setEmail(bookStoreUserDTO.getEmail());
+
+        return user;
     }
 }

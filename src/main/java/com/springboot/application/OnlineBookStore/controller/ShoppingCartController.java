@@ -2,13 +2,9 @@ package com.springboot.application.OnlineBookStore.controller;
 
 import com.springboot.application.OnlineBookStore.dto.CartItemDTO;
 import com.springboot.application.OnlineBookStore.dto.CustomerDTO;
-import com.springboot.application.OnlineBookStore.entity.CartItem;
-import com.springboot.application.OnlineBookStore.entity.Customer;
-import com.springboot.application.OnlineBookStore.service.CustomerService;
-import com.springboot.application.OnlineBookStore.service.ShoppingCartService;
+import com.springboot.application.OnlineBookStore.service_interface.CustomerService;
+import com.springboot.application.OnlineBookStore.service_interface.ShoppingCartService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;

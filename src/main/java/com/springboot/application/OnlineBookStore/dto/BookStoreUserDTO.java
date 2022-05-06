@@ -1,4 +1,4 @@
-package com.springboot.application.OnlineBookStore.user;
+package com.springboot.application.OnlineBookStore.dto;
 
 import com.springboot.application.OnlineBookStore.validation.FieldMatch;
 import com.springboot.application.OnlineBookStore.validation.ValidEmail;
@@ -9,7 +9,7 @@ import javax.validation.constraints.Size;
 @FieldMatch.List({
         @FieldMatch(first = "password", second = "matchingPassword", message = "The password fields must match")
 })
-public class BookStoreUser {
+public class BookStoreUserDTO {
 
     @NotNull(message = "is required")
     @Size(min = 1, message = "is required")
@@ -36,7 +36,7 @@ public class BookStoreUser {
     @Size(min = 1, message = "is required")
     private String email;
 
-    public BookStoreUser() {}
+    public BookStoreUserDTO() {}
 
     public String getUserName() {
         return userName;

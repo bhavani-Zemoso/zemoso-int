@@ -1,14 +1,13 @@
 package com.springboot.application.OnlineBookStore.service;
 
 import com.springboot.application.OnlineBookStore.conversions.EntityDTOConversions;
-import com.springboot.application.OnlineBookStore.dao.BookRepository;
-import com.springboot.application.OnlineBookStore.dao.CartItemRepository;
+import com.springboot.application.OnlineBookStore.dao.repository.BookRepository;
 import com.springboot.application.OnlineBookStore.dto.CartItemDTO;
 import com.springboot.application.OnlineBookStore.dto.CustomerDTO;
 import com.springboot.application.OnlineBookStore.entity.Book;
 import com.springboot.application.OnlineBookStore.entity.CartItem;
-import com.springboot.application.OnlineBookStore.entity.Customer;
-import org.modelmapper.ModelMapper;
+import com.springboot.application.OnlineBookStore.dao.repository.CartItemRepository;
+import com.springboot.application.OnlineBookStore.service_interface.ShoppingCartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,7 +16,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class ShoppingCartService {
+public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Autowired
     private CartItemRepository cartItemRepository;
@@ -28,6 +27,7 @@ public class ShoppingCartService {
     @Autowired
     private EntityDTOConversions entityDTOConversions;
 
+    @Override
     public List<CartItemDTO> listCartItems(CustomerDTO customer)
     {
         List<CartItem> cartItems = cartItemRepository.findByCustomer(entityDTOConversions.convertFromDTOToEntity(customer));
@@ -37,6 +37,7 @@ public class ShoppingCartService {
                 .collect(Collectors.toList());
     }
 
+    @Override
     public Integer addBook(Integer bookId, Integer quantity, CustomerDTO customer)
     {
         Integer addedQuantity = quantity;
@@ -65,6 +66,7 @@ public class ShoppingCartService {
         return addedQuantity;
     }
 
+    @Override
     @Transactional
     public double updateQuantity(Integer bookId, Integer quantity, CustomerDTO
             customer)
@@ -76,12 +78,14 @@ public class ShoppingCartService {
         return subtotal;
     }
 
+    @Override
     @Transactional
     public void removeBook(Integer bookId, CustomerDTO customer)
     {
         cartItemRepository.deleteByCustomerAndBook(customer.getCustomerId(), bookId);
     }
 
+    @Override
     @Transactional
     public void deleteByCustomer(CustomerDTO customer) {
         cartItemRepository.deleteByCustomer(customer.getCustomerId());

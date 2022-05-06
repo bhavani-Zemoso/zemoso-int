@@ -1,12 +1,15 @@
 package com.springboot.application.OnlineBookStore.service;
 
 import com.springboot.application.OnlineBookStore.conversions.EntityDTOConversions;
-import com.springboot.application.OnlineBookStore.dao.CustomerRepository;
+import com.springboot.application.OnlineBookStore.dao.repository.CustomerRepository;
 import com.springboot.application.OnlineBookStore.dto.CustomerDTO;
 import com.springboot.application.OnlineBookStore.dto.OrderDTO;
 import com.springboot.application.OnlineBookStore.entity.*;
-import org.modelmapper.ModelMapper;
+import com.springboot.application.OnlineBookStore.service_interface.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -16,7 +19,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class CustomerServiceImpl implements CustomerService{
+public class CustomerServiceImpl implements CustomerService {
 
     @Autowired
     EntityDTOConversions entityDTOConversions;
@@ -25,6 +28,8 @@ public class CustomerServiceImpl implements CustomerService{
 
     private CustomerRepository customerRepository;
 
+    private int CUSTOMERS_PER_PAGE = 5;
+
     @Autowired
     public CustomerServiceImpl(CustomerRepository customerRepository)
     {
@@ -32,9 +37,13 @@ public class CustomerServiceImpl implements CustomerService{
     }
 
     @Override
-    public List<CustomerDTO> findAll() {
+    public List<CustomerDTO> findAll(int pageNum) {
 
-        List<Customer> customers = customerRepository.findAll();
+        Pageable pageable = PageRequest.of(pageNum-1, CUSTOMERS_PER_PAGE);
+
+        Page<Customer> page = customerRepository.findAll(pageable);
+
+        List<Customer> customers = page.getContent();
 
         return customers.stream()
                 .map(entityDTOConversions::convertFromEntityToDTO)

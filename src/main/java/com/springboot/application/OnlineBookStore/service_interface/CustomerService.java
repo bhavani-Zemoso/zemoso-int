@@ -1,4 +1,4 @@
-package com.springboot.application.OnlineBookStore.service;
+package com.springboot.application.OnlineBookStore.service_interface;
 
 import com.springboot.application.OnlineBookStore.dto.CustomerDTO;
 import com.springboot.application.OnlineBookStore.dto.OrderDTO;
@@ -11,7 +11,7 @@ import java.util.List;
 public interface CustomerService {
 
 
-    public List<CustomerDTO> findAll();
+    public List<CustomerDTO> findAll(int pageNum);
 
     public CustomerDTO findById(int theId);
 

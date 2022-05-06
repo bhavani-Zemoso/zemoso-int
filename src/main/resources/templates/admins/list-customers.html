@@ -22,9 +22,9 @@
         </ul>
         <span class = "navbar-brand">CROSSWORDS</span>
         <ul class = "nav navbar-nav navbar-right">
-            <li class = "nav-item"><a class = "nav-link" th:href = "@{/admins/category/list}"> Categories </a></li>
-            <li class = "nav-item"><a class = "nav-link" th:href = "@{/admins/book/list}"> Books </a></li>
-            <li class = "nav-item"><a class = "nav-link" th:href = "@{/admins/customers/list}"> Customers </a></li>
+            <li class = "nav-item"><a class = "nav-link" th:href = "@{/admins/category/list/page/1}"> Categories </a></li>
+            <li class = "nav-item"><a class = "nav-link" th:href = "@{/admins/book/list/page/1}"> Books </a></li>
+            <li class = "nav-item"><a class = "nav-link" th:href = "@{/admins/customers/list/page/1}"> Customers </a></li>
             <li class = "nav-item"><a class = "nav-link" th:href = "@{/admins/orders/list}"> Orders </a></li>
             <li class = "nav-item">
                 <form action="#" th:action="@{/logout}"
@@ -76,7 +76,7 @@
 
             <!-- Add update button/link -->
             <td>
-                <a th:href = "@{/admins/customers/showOrders(customerId=${tempCustomer.customerId})}"
+                <a th:href = "@{/admins/customers/orders(customerId=${tempCustomer.customerId})}"
                    class = "btn btn-primary btn-sm">
                     Orders
                 </a>
@@ -84,6 +84,15 @@
         </tr>
         </tbody>
     </table>
+
+    <nav>
+        <ul class="pagination justify-content-center">
+
+            <li class="page-item"><a class="page-link" th:href="@{/admins/customers/list/page/1}">1</a></li>
+            <li class="page-item"><a class="page-link" th:href="@{/admins/customers/list/page/2}">2</a></li>
+            <li class="page-item"><a class="page-link" th:href="@{/admins/customers/list/page/3}">3</a></li>
+        </ul>
+    </nav>
 </div>
 
 </body>

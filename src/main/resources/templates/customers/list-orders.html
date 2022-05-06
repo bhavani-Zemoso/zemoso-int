@@ -15,6 +15,23 @@
 
 <body>
 
+<nav class = "navbar navbar-default navbar-expand-lg bg-warning py-4">
+    <div class = "container-fluid">
+        <ul class = "nav navbar-nav">
+            <li class = "nav-item"><span sec:authentication="name"></span></li>
+        </ul>
+        <span class = "navbar-brand">CROSSWORDS</span>
+        <ul class = "nav navbar-nav navbar-right">
+            <li class = "nav-item">
+                <form action="#" th:action="@{/logout}"
+                      method="POST">
+                    <input type="submit" value="Logout" class="nav-link btn btn-outline-success my-2 my-sm-0" />
+                </form>
+            </li>
+        </ul>
+    </div>
+</nav>
+
 <div class="container">
 
     <nav class = "navbar navbar-default navbar-expand-lg bg-dark mt-3 mb-3">
@@ -57,7 +74,7 @@
 
             <!-- Add update button/link -->
             <td>
-                <a th:href = "@{/customers/orders/showDetails(orderId=${tempOrder.orderId})}"
+                <a th:href = "@{/customers/orders/orderDetails(orderId=${tempOrder.orderId})}"
                    class = "btn btn-primary btn-sm">
                     Order Details
                 </a>

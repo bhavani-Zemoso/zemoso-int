@@ -1,14 +1,13 @@
 package com.springboot.application.OnlineBookStore.controller;
 
-import com.springboot.application.OnlineBookStore.dto.BookDTO;
 import com.springboot.application.OnlineBookStore.dto.CustomerDTO;
 import com.springboot.application.OnlineBookStore.dto.OrderDTO;
-import com.springboot.application.OnlineBookStore.entity.Order;
-import com.springboot.application.OnlineBookStore.service.CustomerService;
+import com.springboot.application.OnlineBookStore.service_interface.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -21,17 +20,17 @@ public class AdminCustomerController {
     @Autowired
     private CustomerService customerService;
 
-    @GetMapping("/list")
-    public String listBooks(Model theModel)
+    @GetMapping("/list/page/{pageNum}")
+    public String listBooks(@PathVariable("pageNum") int pageNum, Model theModel)
     {
-        List<CustomerDTO> theCustomers = customerService.findAll();
+        List<CustomerDTO> theCustomers = customerService.findAll(pageNum);
 
         theModel.addAttribute("customers", theCustomers);
 
         return "admins/list-customers";
     }
 
-    @GetMapping("/showOrders")
+    @GetMapping("/orders")
     public String showCustomerOrders(Model theModel, @RequestParam("customerId") int customerId)
     {
         List<OrderDTO> orders = customerService.getCustomerOrders(customerId);

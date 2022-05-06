@@ -2,7 +2,7 @@ package com.springboot.application.OnlineBookStore.config;
 
 import javax.sql.DataSource;
 
-import com.springboot.application.OnlineBookStore.service.UserService;
+import com.springboot.application.OnlineBookStore.service_interface.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -50,7 +50,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/").hasAnyRole("ADMIN", "CUSTOMER")
 			.and()
 			.formLogin()
-				.loginPage("/showMyLoginPage")
+				.loginPage("/login")
 				.loginProcessingUrl("/authenticateTheUser")
 				.permitAll()
 				.successHandler(successHandler)

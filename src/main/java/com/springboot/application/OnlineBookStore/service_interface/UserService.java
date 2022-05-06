@@ -1,14 +1,16 @@
-package com.springboot.application.OnlineBookStore.service;
+package com.springboot.application.OnlineBookStore.service_interface;
 
+import com.springboot.application.OnlineBookStore.dto.BookStoreUserDTO;
 import com.springboot.application.OnlineBookStore.entity.User;
-import com.springboot.application.OnlineBookStore.user.BookStoreUser;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 public interface UserService extends UserDetailsService {
 
     public User findByUserName(String userName);
 
-    public void save(BookStoreUser bookStoreUser);
+    public void save(BookStoreUserDTO bookStoreUserDTO);
 
     public User findRecentUser();
+
+    public void saveAdmin(BookStoreUserDTO user);
 }

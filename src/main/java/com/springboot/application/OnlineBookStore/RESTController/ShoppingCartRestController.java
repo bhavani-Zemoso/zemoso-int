@@ -1,9 +1,8 @@
 package com.springboot.application.OnlineBookStore.RESTController;
 
 import com.springboot.application.OnlineBookStore.dto.CustomerDTO;
-import com.springboot.application.OnlineBookStore.entity.Customer;
-import com.springboot.application.OnlineBookStore.service.CustomerService;
-import com.springboot.application.OnlineBookStore.service.ShoppingCartService;
+import com.springboot.application.OnlineBookStore.service_interface.CustomerService;
+import com.springboot.application.OnlineBookStore.service_interface.ShoppingCartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;

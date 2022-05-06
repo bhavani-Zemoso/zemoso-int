@@ -1,4 +1,4 @@
-package com.springboot.application.OnlineBookStore.dao;
+package com.springboot.application.OnlineBookStore.dao.repository;
 
 import com.springboot.application.OnlineBookStore.entity.Category;
 import org.springframework.data.jpa.repository.JpaRepository;

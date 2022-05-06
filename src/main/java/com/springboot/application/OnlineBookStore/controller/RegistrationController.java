@@ -3,9 +3,9 @@ package com.springboot.application.OnlineBookStore.controller;
 import com.springboot.application.OnlineBookStore.dto.CustomerDTO;
 import com.springboot.application.OnlineBookStore.entity.Customer;
 import com.springboot.application.OnlineBookStore.entity.User;
-import com.springboot.application.OnlineBookStore.service.CustomerService;
-import com.springboot.application.OnlineBookStore.service.UserService;
-import com.springboot.application.OnlineBookStore.user.BookStoreUser;
+import com.springboot.application.OnlineBookStore.service_interface.CustomerService;
+import com.springboot.application.OnlineBookStore.service_interface.UserService;
+import com.springboot.application.OnlineBookStore.dto.BookStoreUserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
@@ -37,21 +37,21 @@ public class RegistrationController {
         dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
     }
 
-    @GetMapping("/showRegistrationForm")
+    @GetMapping("/add")
     public String showMyLoginPage(Model theModel) {
 
-        theModel.addAttribute("bookStoreUser", new BookStoreUser());
+        theModel.addAttribute("bookStoreUser", new BookStoreUserDTO());
 
         return "registration-form";
     }
 
     @PostMapping("/processRegistrationForm")
     public String processRegistrationForm(
-            @Valid @ModelAttribute("bookStoreUser") BookStoreUser bookStoreUser,
+            @Valid @ModelAttribute("bookStoreUser") BookStoreUserDTO bookStoreUserDTO,
             BindingResult theBindingResult,
             Model theModel) {
 
-        String userName = bookStoreUser.getUserName();
+        String userName = bookStoreUserDTO.getUserName();
         logger.info("Processing registration form for: " + userName);
 
         // form validation
@@ -62,7 +62,7 @@ public class RegistrationController {
         // check the database if user already exists
         User existing = userService.findByUserName(userName);
         if (existing != null){
-            theModel.addAttribute("bookStoreUser", new BookStoreUser());
+            theModel.addAttribute("bookStoreUser", new BookStoreUserDTO());
             theModel.addAttribute("registrationError", "User name already exists.");
 
             logger.warning("User name already exists.");
@@ -70,14 +70,14 @@ public class RegistrationController {
         }
 
         // create user account
-        userService.save(bookStoreUser);
+        userService.save(bookStoreUserDTO);
 
         logger.info("Successfully created user: " + userName);
 
-        return "redirect:/register/showCustomerForm";
+        return "redirect:/register/addCustomer";
     }
 
-    @GetMapping("/showCustomerForm")
+    @GetMapping("/addCustomer")
     public String showCustomerForm(Model theModel)
     {
         User recentUser = userService.findRecentUser();

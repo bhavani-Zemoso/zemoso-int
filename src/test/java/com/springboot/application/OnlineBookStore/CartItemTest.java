@@ -1,10 +1,9 @@
 package com.springboot.application.OnlineBookStore;
 
-import com.springboot.application.OnlineBookStore.dao.CartItemRepository;
+import com.springboot.application.OnlineBookStore.dao.repository.CartItemRepository;
 import com.springboot.application.OnlineBookStore.entity.Book;
 import com.springboot.application.OnlineBookStore.entity.CartItem;
 import com.springboot.application.OnlineBookStore.entity.Customer;
-import com.springboot.application.OnlineBookStore.validation.FieldMatch;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;

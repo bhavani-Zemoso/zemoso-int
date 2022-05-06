@@ -1,7 +1,7 @@
 package com.springboot.application.OnlineBookStore.config;
 
 import com.springboot.application.OnlineBookStore.entity.User;
-import com.springboot.application.OnlineBookStore.service.UserService;
+import com.springboot.application.OnlineBookStore.service_interface.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.AuthorityUtils;
