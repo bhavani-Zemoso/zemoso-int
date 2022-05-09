@@ -1,4 +1,3 @@
-/*
 package com.springboot.application.OnlineBookStore;
 
 import com.springboot.application.OnlineBookStore.dao.repository.BookRepository;
@@ -31,7 +30,7 @@ public class BookRepositoryTest {
     @Test
     public void testListFirstPage()
     {
-        int pageNumber = 1;
+        int pageNumber = 0;
         int pageSize = 4;
 
         Pageable pageable = PageRequest.of(pageNumber, pageSize);
@@ -42,8 +41,6 @@ public class BookRepositoryTest {
 
         books.forEach(book -> System.out.println(book));
 
-        assertThat(books.size()).isEqualTo(1);
+        assertThat(books.size()).isEqualTo(pageSize);
     }
 }
-
- */
